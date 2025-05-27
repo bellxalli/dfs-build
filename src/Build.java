@@ -189,6 +189,37 @@ public class Build {
    * @return a set of values that cannot be reached from the starting value
    */
   public static <T> Set<T> unreachable(Map<T, List<T>> graph, T starting) {
-    return new HashSet<>();
+    Set<T> visited = new HashSet<>();
+    Stack<T> stack = new Stack<>();
+    stack.push(starting);
+
+    while(!stack.isEmpty()) 
+    {
+      T curr = stack.pop();
+
+      if(visited.contains(curr)) 
+      {
+        continue;
+      }
+
+      visited.add(curr);
+
+      List<T> neighbors = graph.get(curr);
+
+      if(neighbors != null) 
+      {
+        for(T n : neighbors) 
+        {
+          if(!visited.contains(n)) 
+          {
+            stack.push(n);
+          }
+        }
+      }
+    }
+
+    Set<T> unReached = new HashSet<>(graph.keySet());
+    unReached.removeAll(visited);
+    return unReached;
   }
 }
