@@ -2,6 +2,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 
 public class Build {
@@ -14,6 +15,34 @@ public class Build {
    * @param k the maximum word length (exclusive)
    */
   public static void printShortWords(Vertex<String> vertex, int k) {
+    Set<Vertex<String>> visited = new HashSet<>();
+    Stack<Vertex<String>> stack = new Stack<>();
+    stack.push(vertex);
+
+    while(!stack.isEmpty()) 
+    {
+      Vertex<String> curr = stack.pop();
+
+      if (visited.contains(curr) || curr == null) 
+      {
+        continue;
+      }
+
+      visited.add(curr);
+
+      if(curr.data !=null && curr.data.length()< k) 
+      {
+        System.out.println(curr.data);
+      }
+
+      for(Vertex<String> n : curr.neighbors) 
+      {
+        if(!visited.contains(n)) 
+        {
+          stack.push(n);
+        }
+      }
+    }
   }
 
   /**
@@ -23,7 +52,41 @@ public class Build {
    * @return the longest reachable word, or an empty string if the vertex is null
    */
   public static String longestWord(Vertex<String> vertex) {
-    return "";
+    Set<Vertex<String>> visited = new HashSet<>();
+    Stack<Vertex<String>> stack = new Stack<>();
+    stack.push(vertex);
+
+    String longest = "";
+
+    while(!stack.isEmpty()) 
+    {
+      Vertex<String> curr = stack.pop();
+
+      if(curr == null)
+      {
+        return "";
+      }
+      if (visited.contains(curr)) 
+      {
+        continue;
+      }
+
+      visited.add(curr);
+
+      if(curr.data !=null && curr.data.length() > longest.length()) 
+      {
+        longest = curr.data;
+      }
+
+      for(Vertex<String> n : curr.neighbors) 
+      {
+        if(!visited.contains(n)) 
+        {
+          stack.push(n);
+        }
+      }
+    }
+    return longest;
   }
 
   /**
