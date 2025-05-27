@@ -23,7 +23,7 @@ public class Build {
     {
       Vertex<String> curr = stack.pop();
 
-      if (visited.contains(curr) || curr == null) 
+      if(visited.contains(curr) || curr == null) 
       {
         continue;
       }
@@ -66,7 +66,7 @@ public class Build {
       {
         return "";
       }
-      if (visited.contains(curr)) 
+      if(visited.contains(curr)) 
       {
         continue;
       }
@@ -97,6 +97,36 @@ public class Build {
    * @param <T> the type of values stored in the vertices
    */
   public static <T> void printSelfLoopers(Vertex<T> vertex) {
+    Set<Vertex<T>> visited = new HashSet<>();
+    Stack<Vertex<T>> stack = new Stack<>();
+    stack.push(vertex);
+
+    while(!stack.isEmpty())
+    {
+      Vertex<T> curr = stack.pop();
+
+      if(visited.contains(curr) || curr == null)
+      {
+        continue;
+      }
+
+      visited.add(curr);
+
+      //if(something)
+      {
+        System.out.println(curr.data);
+      }
+
+      for(Vertex<T> n : curr.neighbors) 
+      {
+        if(!visited.contains(n)) 
+        {
+          stack.push(n);
+        }
+      }
+    }
+
+
   }
 
   /**
