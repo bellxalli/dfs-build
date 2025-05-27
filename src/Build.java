@@ -1,6 +1,8 @@
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
@@ -136,7 +138,44 @@ public class Build {
    * @return true if the destination is reachable from the start, false otherwise
    */
   public static boolean canReach(Airport start, Airport destination) {
-    
+    if(start == null || destination == null)
+    {
+      return false;
+    }
+    if(start == destination)
+    {
+      return true;
+    }
+
+    Set<Airport> visited = new HashSet<>();
+    Queue<Airport> queue = new LinkedList<>();
+    queue.add(start);
+
+    while(!queue.isEmpty())
+    {
+      Airport curr = queue.poll();
+
+      if(curr == null)
+      {
+        return false;
+      }
+      if(visited.contains(curr))
+      {
+        continue;
+      }
+      if(curr == destination)
+      {
+        return true;
+      }
+
+      for(Airport a : curr.getOutboundFlights())
+      {
+        if(!queue.contains(a))
+        {
+          queue.add(a);
+        }
+      }
+    }
     return false;
   }
 
