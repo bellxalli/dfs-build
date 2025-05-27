@@ -112,7 +112,7 @@ public class Build {
 
       visited.add(curr);
 
-      //if(something)
+      if(curr.neighbors.contains(curr))
       {
         System.out.println(curr.data);
       }
@@ -125,8 +125,6 @@ public class Build {
         }
       }
     }
-
-
   }
 
   /**
@@ -138,6 +136,7 @@ public class Build {
    * @return true if the destination is reachable from the start, false otherwise
    */
   public static boolean canReach(Airport start, Airport destination) {
+    
     return false;
   }
 
